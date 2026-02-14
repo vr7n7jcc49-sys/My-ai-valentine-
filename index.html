@@ -1,45 +1,119 @@
 <!DOCTYPE html>
-<html>
+<html lang="cs">
 <head>
-<meta charset="UTF-8">
-<title>Valentine ❤️</title>
-<style>
-body {
-  font-family: Arial;
-  text-align: center;
-  margin-top: 100px;
-  background: #ffe6f0;
-}
-button {
-  padding: 15px 25px;
-  font-size: 18px;
-  margin: 10px;
-  cursor: pointer;
-}
-#no {
-  position: absolute;
-}
-</style>
-</head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pro Veroniku ❤️</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #ffe6e6; /* Světle růžové pozadí */
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
+            text-align: center;
+        }
 
+        h1 {
+            color: #d63384;
+            font-size: 2.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 20px;
+            position: relative;
+        }
+
+        button {
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        #yesBtn {
+            background-color: #ff4d6d;
+            color: white;
+        }
+
+        #yesBtn:hover {
+            transform: scale(1.1);
+            background-color: #ff758f;
+        }
+
+        #noBtn {
+            background-color: #adb5bd;
+            color: white;
+            position: relative;
+        }
+
+        .heart {
+            position: absolute;
+            color: #ff4d6d;
+            font-size: 20px;
+            animation: fall linear infinite;
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(100vh);
+            }
+        }
+    </style>
+</head>
 <body>
 
-<h1>Will you be my Valentine Veronika? ❤️❤️❤️</h1>
+    <h1>Veroniko, budeš moje Valentýnka? ❤️</h1>
 
-<button onclick="yesClick()">Yes</button>
-<button id="no" onmouseover="moveNo()">No</button>
+    <div class="buttons">
+        <button id="yesBtn" onclick="celebrate()">ANO</button>
+        <button id="noBtn" onmouseover="moveButton()">NE</button>
+    </div>
 
-<script>
-function yesClick(){
-  document.body.innerHTML = "<h1>Best decision ever ❤️ Be ready for dinner next week 😘.</h1>";
-}
+    <script>
+        // Funkce, která posune tlačítko "NE" pryč, když na něj najede myš/prst
+        function moveButton() {
+            const btn = document.getElementById('noBtn');
+            const x = Math.random() * (window.innerWidth - btn.offsetWidth);
+            const y = Math.random() * (window.innerHeight - btn.offsetHeight);
+            
+            btn.style.position = 'fixed';
+            btn.style.left = x + 'px';
+            btn.style.top = y + 'px';
+        }
 
-function moveNo(){
-  const btn = document.getElementById("no");
-  btn.style.top = Math.random()*80 + "%";
-  btn.style.left = Math.random()*80 + "%";
-}
-</script>
+        // Funkce, co se stane po kliknutí na ANO
+        function celebrate() {
+            document.body.innerHTML = `
+                <h1 style="font-size: 4rem;">JUPÍÍÍ! ❤️🥰</h1>
+                <p style="font-size: 1.5rem; color: #d63384;">Věděl jsem to! Už se moc těším!</p>
+                <div style="font-size: 5rem;">🌹🎁🥂</div>
+            `;
+            setInterval(createHeart, 300);
+        }
 
+        // Padající srdíčka na pozadí
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.innerHTML = '❤️';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = Math.random() * 2 + 3 + 's';
+            document.body.appendChild(heart);
+            
+            setTimeout(() => { heart.remove(); }, 5000);
+        }
+    </script>
 </body>
 </html>
