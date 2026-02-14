@@ -3,75 +3,116 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pro Veru ❤️</title>
+    <title>Pro Veroniku ❤️</title>
     <style>
         body {
-            height: 100vh;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
-            flex-direction: column;
-            text-align: center;
-            font-family: sans-serif;
-            background: linear-gradient(to bottom, #ffe6eb, #fff);
-            overflow: hidden;
+            height: 100vh;
             margin: 0;
+            background-color: #ffe6e6; /* Světle růžové pozadí */
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
+            text-align: center;
         }
-        h1 { margin-bottom: 40px; color: #333; }
-        .buttons { position: relative; height: 100px; width: 300px; }
+
+        h1 {
+            color: #d63384;
+            font-size: 2.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 20px;
+            position: relative;
+        }
+
         button {
-            padding: 14px 24px;
-            border-radius: 12px;
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            font-weight: bold;
             border: none;
-            font-size: 18px;
+            border-radius: 50px;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
         }
-        .yes { background: #ff4d6d; color: white; }
-        .yes:hover { transform: scale(1.1); }
-        .no { background: #ccc; position: absolute; }
-        .hearts span {
-            font-size: 24px;
-            display: inline-block;
-            margin: 5px;
-            animation: float 3s infinite ease-in-out;
+
+        #yesBtn {
+            background-color: #ff4d6d;
+            color: white;
         }
-        @keyframes float {
-            0%, 100% { transform: translateY(0); opacity: 1; }
-            50% { transform: translateY(-20px); opacity: 0.7; }
+
+        #yesBtn:hover {
+            transform: scale(1.1);
+            background-color: #ff758f;
+        }
+
+        #noBtn {
+            background-color: #adb5bd;
+            color: white;
+            position: relative;
+        }
+
+        .heart {
+            position: absolute;
+            color: #ff4d6d;
+            font-size: 20px;
+            animation: fall linear infinite;
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(100vh);
+            }
         }
     </style>
 </head>
 <body>
 
-    <div id="content">
-        <h1>Veru, budeš moje Valentýnka? 💕</h1>
-        <div class="buttons">
-            <button class="yes" onclick="handleYes()">Ano 💖</button>
-            <button class="no" id="noBtn" onmousemove="moveNoButton()">Ne 🙈</button>
-        </div>
+    <h1>Veroniko, budeš moje Valentýnka? ❤️</h1>
+
+    <div class="buttons">
+        <button id="yesBtn" onclick="celebrate()">ANO</button>
+        <button id="noBtn" onmouseover="moveButton()">NE</button>
     </div>
 
     <script>
-        function moveNoButton() {
+        // Funkce, která posune tlačítko "NE" pryč, když na něj najede myš/prst
+        function moveButton() {
             const btn = document.getElementById('noBtn');
-            const newX = Math.random() * (window.innerWidth - 100);
-            const newY = Math.random() * (window.innerHeight - 60);
-            btn.style.left = newX + 'px';
-            btn.style.top = newY + 'px';
+            const x = Math.random() * (window.innerWidth - btn.offsetWidth);
+            const y = Math.random() * (window.innerHeight - btn.offsetHeight);
+            
             btn.style.position = 'fixed';
+            btn.style.left = x + 'px';
+            btn.style.top = y + 'px';
         }
 
-        function handleYes() {
-            document.getElementById('content').innerHTML = `
-                <div style="animation: fadeIn 0.8s ease-in-out;">
-                    <h1>Nejlepší rozhodnutí vůbec. Miluju tě ❤️</h1>
-                    <p style="font-size: 1.2rem;">Buď připravená na večeři příští týden!</p>
-                    <div class="hearts">
-                        ${'<span>💖</span>'.repeat(20)}
-                    </div>
-                </div>
+        // Funkce, co se stane po kliknutí na ANO
+        function celebrate() {
+            document.body.innerHTML = `
+                <h1 style="font-size: 4rem;">Super! ❤️🥰</h1>
+                <p style="font-size: 1.5rem; color: #d63384;">Co to oslavit příští týden nějakou dobrou večeří? 😘</p>
+                <div style="font-size: 5rem;">🌹🎁🥂</div>
             `;
+            setInterval(createHeart, 300);
+        }
+
+        // Padající srdíčka na pozadí
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.innerHTML = '❤️';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = Math.random() * 2 + 3 + 's';
+            document.body.appendChild(heart);
+            
+            setTimeout(() => { heart.remove(); }, 5000);
         }
     </script>
 </body>
